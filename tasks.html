@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .filters { background: #f9f9f9; padding: 20px; margin: 20px 0; }
+        .filter-group { display: inline-block; margin-right: 15px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+        .modal-content { background: white; margin: 50px auto; padding: 20px; width: 80%; max-width: 600px; }
+        .close { float: right; font-size: 24px; cursor: pointer; }
+        .btn-view { padding: 5px 10px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        .btn-view:hover { background: #0056b3; }
+        select { padding: 5px; border: 1px solid #ddd; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h2>Task Manager</h2>
+    
+    <div style="margin-bottom: 20px;">
+        <button id="createTaskBtn" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 3px; cursor: pointer;">
+            Create New Task
+        </button>
+        <button id="logoutBtn" style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 3px; cursor: pointer; margin-left: 10px;">
+            Logout
+        </button>
+    </div>
+
+    <div class="filters">
+        <form id="filterForm">
+            <div class="filter-group">
+                <label>Status:</label>
+                <select id="statusFilter" name="status">
+                    <option value="">All Statuses</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Sort by:</label>
+                <select id="sortBy" name="sort">
+                    <option value="created_at">Created Date</option>
+                    <option value="updated_at">Last Updated</option>
+                    <option value="title">Title</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Order:</label>
+                <select id="sortOrder" name="order">
+                    <option value="DESC">Descending</option>
+                    <option value="ASC">Ascending</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <button type="submit" style="padding: 5px 15px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                    Apply Filters
+                </button>
+                <button type="button" id="resetFilters" style="padding: 5px 15px; background: #6c757d; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                    Reset
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <table id="tasksTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Last Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td colspan="7">Loading tasks...</td></tr>
+        </tbody>
+    </table>
+
+    <div class="modal" id="createTaskModal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h3>Create New Task</h3>
+            <form id="createTaskForm">
+                <div style="margin-bottom: 15px;">
+                    <label>Title:</label><br>
+                    <input type="text" id="taskTitle" required style="width: 100%; padding: 8px; margin: 5px 0;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label>Description:</label><br>
+                    <textarea id="taskDescription" style="width: 100%; padding: 8px; margin: 5px 0; height: 100px;"></textarea>
+                </div>
+                <button type="submit" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                    Create Task
+                </button>
+                <button type="button" onclick="$('#createTaskModal').hide()" style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                    Cancel
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/tasks.js"></script>
+    <script>
+        $('#logoutBtn').on('click', function() {
+            localStorage.removeItem('authToken');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>
