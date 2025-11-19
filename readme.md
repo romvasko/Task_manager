@@ -4,6 +4,10 @@ Simple task management system with user and admin panels.
 
 # Quick Start
 
+### Installation
+
+docker-compose up -d
+
 ## Admin
 
  -    Username: admin
@@ -16,7 +20,3 @@ Simple task management system with user and admin panels.
 
 ### Prerequisites
 - Docker and Docker Compose
-
-### Installation
-
-docker-compose up -d
